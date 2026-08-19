@@ -1,119 +1,136 @@
+const alojamientos = [
+  {
+    id: 1,
+    tipo: "Cabaña",
+    titulo: "Refugio en el Bosque",
+    calificacion: "4.8",
+    ubicacion: "Mazamitla, Jalisco",
+    precio: "$1,200",
+    imagen: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&q=80"
+  },
+  {
+    id: 2,
+    tipo: "Departamento",
+    titulo: "Penthouse Céntrico",
+    calificacion: "4.9",
+    ubicacion: "Guadalajara, Jalisco",
+    precio: "$2,100",
+    imagen: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80"
+  },
+  {
+    id: 3,
+    tipo: "Casa",
+    titulo: "Villa del Sol",
+    calificacion: "4.7",
+    ubicacion: "Tepoztlán, Morelos",
+    precio: "$1,800",
+    imagen: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80"
+  },
+  {
+    id: 4,
+    tipo: "Loft",
+    titulo: "Estudio Industrial",
+    calificacion: "4.6",
+    ubicacion: "Ciudad de México",
+    precio: "$1,500",
+    imagen: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80"
+  },
+  {
+    id: 5,
+    tipo: "Cabaña",
+    titulo: "Glamping Estelar",
+    calificacion: "5.0",
+    ubicacion: "Valle de Bravo, Edomex",
+    precio: "$3,200",
+    imagen: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80"
+  },
+  {
+    id: 6,
+    tipo: "Casa",
+    titulo: "Casa Colonial",
+    calificacion: "4.8",
+    ubicacion: "San Miguel de Allende",
+    precio: "$2,500",
+    imagen: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80"
+  }
+];
+
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white text-black font-sans">
-
-      {/* 1. Navbar con borde marcado */}
-      <header className="flex justify-between items-center p-6 border-b-4 border-black bg-white">
-        <div className="text-purple-800 font-black text-2xl tracking-tighter uppercase">StayFinder</div>
-        <nav className="hidden md:flex gap-8 text-sm font-bold text-black">
-          <a href="#" className="hover:text-purple-600 transition-colors">Alojamientos</a>
-          <a href="#" className="hover:text-purple-600 transition-colors">Favoritos</a>
-          <a href="#" className="hover:text-purple-600 transition-colors">Acerca de</a>
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans">
+      <header className="flex justify-between items-center p-6 bg-white shadow-sm">
+        <div className="text-purple-900 font-bold text-2xl tracking-tight">StayFinder</div>
+        <nav className="hidden md:flex gap-8 text-sm font-medium text-slate-600">
+          <a href="#" className="hover:text-purple-700 transition-colors">Alojamientos</a>
+          <a href="#" className="hover:text-purple-700 transition-colors">Favoritos</a>
+          <a href="#" className="hover:text-purple-700 transition-colors">Acerca de</a>
         </nav>
       </header>
 
-      {/* 2. Hero Section (Degradado personalizado) */}
-      <section className="bg-gradient-to-b from-purple-900 to-black text-white pt-20 pb-32 px-8 border-b-4 border-black">
+      <section className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white pt-24 pb-36 px-8">
         <div className="max-w-5xl mx-auto md:text-left text-center">
-          <p className="text-purple-300 font-bold text-xs uppercase tracking-widest mb-3">
-            Hospedajes fuera de lo común
+          <p className="text-purple-200 font-semibold text-sm tracking-wide mb-4">
+            Hospedajes excepcionales
           </p>
-          <h1 className="text-4xl md:text-5xl font-black mb-4 leading-tight max-w-2xl uppercase tracking-tight">
-            Encuentra un espacio épico para tu viaje
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight max-w-2xl text-white">
+            Encuentra un espacio exclusivo para tu viaje
           </h1>
-          <p className="text-gray-300 text-sm md:text-base font-medium">
-            Explora casas, lofts y cabañas con diseños únicos en todo el país.
+          <p className="text-slate-300 text-base md:text-lg font-normal max-w-xl">
+            Explora casas, lofts y cabañas con diseños únicos y amenidades de primer nivel.
           </p>
         </div>
       </section>
 
-      {/* 3. Buscador Flotante (Estilo minimalista con sombras duras) */}
-      <div className="max-w-4xl mx-auto px-6 -mt-10 relative z-10">
-        <div className="bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-2 flex flex-col md:flex-row gap-2 items-center">
-
-          <div className="flex-1 w-full flex flex-col px-4 py-2 border-b-2 md:border-b-0 md:border-r-2 border-black">
-            <label className="text-xs font-black text-black uppercase">Destino</label>
-            <input type="text" placeholder="¿A dónde quieres ir?" className="mt-1 outline-none text-sm text-gray-800 font-medium placeholder-gray-400" />
+      <div className="max-w-4xl mx-auto px-6 -mt-16 relative z-10">
+        <div className="bg-white rounded-2xl shadow-xl p-3 flex flex-col md:flex-row gap-2 items-center border border-slate-100">
+          <div className="flex-1 w-full flex flex-col px-5 py-3 md:border-r border-slate-200">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Destino</label>
+            <input type="text" placeholder="¿A dónde quieres ir?" className="outline-none text-base text-slate-800 font-medium placeholder-slate-400 bg-transparent" />
           </div>
-
-          <div className="flex-1 w-full flex flex-col px-4 py-2">
-            <label className="text-xs font-black text-black uppercase">Huéspedes</label>
-            <select className="mt-1 outline-none bg-white text-sm text-gray-800 font-medium cursor-pointer">
+          <div className="flex-1 w-full flex flex-col px-5 py-3">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Huéspedes</label>
+            <select className="outline-none text-base text-slate-800 font-medium cursor-pointer bg-transparent">
               <option>Cualquiera</option>
               <option>1 a 2 huéspedes</option>
               <option>3 a 4 huéspedes</option>
             </select>
           </div>
-
-          <button className="w-full md:w-auto bg-purple-700 text-white font-black uppercase py-3 px-8 border-2 border-black hover:bg-purple-900 transition-colors">
+          <button className="w-full md:w-auto bg-purple-800 text-white font-semibold py-4 px-10 rounded-xl hover:bg-purple-900 transition-colors shadow-md">
             Buscar
           </button>
         </div>
       </div>
 
-      {/* 4. Sección de Alojamientos (Tarjetas con contornos negros) */}
-      <main className="max-w-5xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-black mb-8 uppercase tracking-tight">Destacados</h2>
-
+      <main className="max-w-5xl mx-auto px-6 py-20">
+        <h2 className="text-2xl font-bold mb-10 text-slate-900 tracking-tight">Alojamientos Destacados</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-          {/* Tarjeta 1 */}
-          <div className="bg-white border-4 border-black p-3 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex flex-col hover:-translate-y-1 hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] transition-all">
-            <div className="bg-gray-100 w-full h-48 border-2 border-black mb-4 flex items-center justify-center text-gray-500 text-sm font-bold uppercase">
-              [ Cabaña ]
+          {alojamientos.map((lugar) => (
+            <div key={lugar.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 flex flex-col group">
+              <div className="w-full h-56 relative overflow-hidden">
+                <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-purple-900 shadow-sm">
+                  {lugar.tipo}
+                </div>
+                <img src={lugar.imagen} alt={lugar.titulo} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="p-6 flex flex-col flex-grow">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-semibold text-slate-900 text-lg leading-tight">{lugar.titulo}</h3>
+                  <span className="text-sm font-medium bg-slate-100 text-slate-700 px-2 py-1 rounded-md flex items-center gap-1">
+                    ★ {lugar.calificacion}
+                  </span>
+                </div>
+                <p className="text-sm font-normal text-slate-500 mb-6">{lugar.ubicacion}</p>
+                <div className="mt-auto pt-5 border-t border-slate-100">
+                  <p className="font-bold text-lg text-slate-900">{lugar.precio} <span className="font-normal text-sm text-slate-500">MXN / noche</span></p>
+                  <button className="w-full bg-slate-900 text-white mt-5 py-3 rounded-xl font-medium hover:bg-purple-800 transition-colors">
+                    Ver disponibilidad
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="flex justify-between items-start mb-1">
-              <h3 className="font-black text-black text-lg leading-tight">Refugio en el Lago</h3>
-              <span className="text-sm font-black bg-purple-200 px-2 py-0.5 border border-black">★ 4.8</span>
-            </div>
-            <p className="text-sm font-medium text-gray-600 mb-3">Pátzcuaro, Michoacán</p>
-            <div className="mt-auto pt-4 border-t-2 border-black">
-              <p className="font-black text-xl text-black">$1,250 <span className="font-bold text-xs text-gray-500 uppercase">MXN / noche</span></p>
-              <button className="w-full bg-black text-white mt-4 py-2.5 font-black uppercase tracking-wider hover:bg-purple-800 transition-colors border-2 border-black">
-                Ver más
-              </button>
-            </div>
-          </div>
-
-          {/* Tarjeta 2 */}
-          <div className="bg-white border-4 border-black p-3 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex flex-col hover:-translate-y-1 hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] transition-all">
-            <div className="bg-gray-100 w-full h-48 border-2 border-black mb-4 flex items-center justify-center text-gray-500 text-sm font-bold uppercase">
-              [ Departamento ]
-            </div>
-            <div className="flex justify-between items-start mb-1">
-              <h3 className="font-black text-black text-lg leading-tight">Loft Céntrico</h3>
-              <span className="text-sm font-black bg-purple-200 px-2 py-0.5 border border-black">★ 4.5</span>
-            </div>
-            <p className="text-sm font-medium text-gray-600 mb-3">Morelia, Michoacán</p>
-            <div className="mt-auto pt-4 border-t-2 border-black">
-              <p className="font-black text-xl text-black">$900 <span className="font-bold text-xs text-gray-500 uppercase">MXN / noche</span></p>
-              <button className="w-full bg-black text-white mt-4 py-2.5 font-black uppercase tracking-wider hover:bg-purple-800 transition-colors border-2 border-black">
-                Ver más
-              </button>
-            </div>
-          </div>
-
-          {/* Tarjeta 3 */}
-          <div className="bg-white border-4 border-black p-3 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex flex-col hover:-translate-y-1 hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] transition-all">
-            <div className="bg-gray-100 w-full h-48 border-2 border-black mb-4 flex items-center justify-center text-gray-500 text-sm font-bold uppercase">
-              [ Casa ]
-            </div>
-            <div className="flex justify-between items-start mb-1">
-              <h3 className="font-black text-black text-lg leading-tight">Villa Piscina</h3>
-              <span className="text-sm font-black bg-purple-200 px-2 py-0.5 border border-black">★ 4.9</span>
-            </div>
-            <p className="text-sm font-medium text-gray-600 mb-3">Cuernavaca, Morelos</p>
-            <div className="mt-auto pt-4 border-t-2 border-black">
-              <p className="font-black text-xl text-black">$2,400 <span className="font-bold text-xs text-gray-500 uppercase">MXN / noche</span></p>
-              <button className="w-full bg-black text-white mt-4 py-2.5 font-black uppercase tracking-wider hover:bg-purple-800 transition-colors border-2 border-black">
-                Ver más
-              </button>
-            </div>
-          </div>
-
+          ))}
         </div>
       </main>
-
     </div>
   );
 }

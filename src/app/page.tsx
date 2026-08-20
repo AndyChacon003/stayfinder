@@ -1,3 +1,12 @@
+const categorias = [
+  { id: 1, nombre: "Cabañas", icono: "🌲" },
+  { id: 2, nombre: "Lofts", icono: "🏢" },
+  { id: 3, nombre: "Casas", icono: "🏠" },
+  { id: 4, nombre: "Mansiones", icono: "🏰" },
+  { id: 5, nombre: "Glamping", icono: "⛺" },
+  { id: 6, nombre: "Frente al lago", icono: "🌊" }
+];
+
 const alojamientos = [
   {
     id: 1,
@@ -101,7 +110,18 @@ export default function Home() {
         </div>
       </div>
 
-      <main className="max-w-5xl mx-auto px-6 py-20">
+      <div className="max-w-5xl mx-auto px-6 mt-12 mb-4">
+        <div className="flex justify-between items-center overflow-x-auto py-4 scrollbar-hide gap-8">
+          {categorias.map((cat) => (
+            <div key={cat.id} className="flex flex-col items-center gap-2 min-w-max cursor-pointer text-slate-500 hover:text-purple-900 transition-colors group">
+              <span className="text-2xl opacity-80 group-hover:opacity-100 transition-opacity">{cat.icono}</span>
+              <span className="text-sm font-medium border-b-2 border-transparent group-hover:border-purple-900 pb-1">{cat.nombre}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <main className="max-w-5xl mx-auto px-6 pb-20">
         <h2 className="text-2xl font-bold mb-10 text-slate-900 tracking-tight">Alojamientos Destacados</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {alojamientos.map((lugar) => (
@@ -131,6 +151,26 @@ export default function Home() {
           ))}
         </div>
       </main>
+
+      <section className="bg-rose-50 py-16 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">¿Tienes una propiedad?</h2>
+        <p className="text-slate-600 mb-6 text-sm md:text-base">Próximamente podrás registrar tus alojamientos en StayFinder.</p>
+        <button className="bg-[#e61e4d] hover:bg-red-700 text-white font-bold py-2.5 px-6 rounded-md transition-colors">
+          Más información
+        </button>
+      </section>
+
+      <footer className="bg-[#0B0F19] text-white py-10 px-6">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-end gap-4">
+          <div className="text-center md:text-left">
+            <h4 className="font-bold text-lg mb-1">StayFinder</h4>
+            <p className="text-slate-400 text-sm">Proyecto educativo desarrollado con Next.js.</p>
+          </div>
+          <div className="text-slate-400 text-sm text-center md:text-right">
+            © 2026 StayFinder. Todos los derechos reservados.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

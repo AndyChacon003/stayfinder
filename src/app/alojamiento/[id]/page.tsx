@@ -9,8 +9,13 @@ const alojamientos = [
     { id: 6, tipo: "Casa", titulo: "Casa Colonial", calificacion: "4.8", ubicacion: "San Miguel de Allende", precio: "$2,500", imagen: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80" }
 ];
 
-export default function AlojamientoDetalle({ params }: { params: { id: string } }) {
-    const idNumerico = parseInt(params.id);
+// 1. Agregamos "async" a la función y definimos params como Promise
+export default async function AlojamientoDetalle({ params }: { params: Promise<{ id: string }> }) {
+
+    // 2. Esperamos a que los parámetros se resuelvan
+    const resolvedParams = await params;
+    const idNumerico = parseInt(resolvedParams.id, 10);
+
     const lugar = alojamientos.find((a) => a.id === idNumerico);
 
     if (!lugar) {

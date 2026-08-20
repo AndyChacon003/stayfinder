@@ -1,10 +1,10 @@
 const categorias = [
-  { id: 1, nombre: "Cabañas", icono: "🌲" },
-  { id: 2, nombre: "Lofts", icono: "🏢" },
-  { id: 3, nombre: "Casas", icono: "🏠" },
-  { id: 4, nombre: "Mansiones", icono: "🏰" },
-  { id: 5, nombre: "Glamping", icono: "⛺" },
-  { id: 6, nombre: "Frente al lago", icono: "🌊" }
+  { id: 1, nombre: "Cabañas" },
+  { id: 2, nombre: "Lofts" },
+  { id: 3, nombre: "Casas" },
+  { id: 4, nombre: "Mansiones" },
+  { id: 5, nombre: "Glamping" },
+  { id: 6, nombre: "Frente al lago" }
 ];
 
 const alojamientos = [
@@ -111,12 +111,11 @@ export default function Home() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 mt-12 mb-4">
-        <div className="flex justify-between items-center overflow-x-auto py-4 scrollbar-hide gap-8">
+        <div className="flex items-center overflow-x-auto py-4 scrollbar-hide gap-4">
           {categorias.map((cat) => (
-            <div key={cat.id} className="flex flex-col items-center gap-2 min-w-max cursor-pointer text-slate-500 hover:text-purple-900 transition-colors group">
-              <span className="text-2xl opacity-80 group-hover:opacity-100 transition-opacity">{cat.icono}</span>
-              <span className="text-sm font-medium border-b-2 border-transparent group-hover:border-purple-900 pb-1">{cat.nombre}</span>
-            </div>
+            <button key={cat.id} className="px-5 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-medium text-slate-600 hover:border-purple-900 hover:text-purple-900 hover:bg-purple-50 transition-all whitespace-nowrap shadow-sm">
+              {cat.nombre}
+            </button>
           ))}
         </div>
       </div>

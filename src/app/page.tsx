@@ -152,9 +152,9 @@ export default function Home() {
         </div>
       </main>
 
-      <section className="bg-rose-50 py-16 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">¿Tienes una propiedad?</h2>
-        <p className="text-slate-600 mb-6 text-sm md:text-base">Próximamente podrás registrar tus alojamientos en StayFinder.</p>
+      <section className="bg-purple-900 py-16 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">¿Tienes una propiedad?</h2>
+        <p className="text-purple-200 mb-6 text-sm md:text-base">Próximamente podrás registrar tus alojamientos en StayFinder.</p>
         <button className="bg-[#e61e4d] hover:bg-red-700 text-white font-bold py-2.5 px-6 rounded-md transition-colors">
           Más información
         </button>

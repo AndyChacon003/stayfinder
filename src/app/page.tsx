@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const categorias = [
   { id: 1, nombre: "Cabañas" },
   { id: 2, nombre: "Lofts" },
@@ -141,9 +143,9 @@ export default function Home() {
                 <p className="text-sm font-normal text-slate-500 mb-6">{lugar.ubicacion}</p>
                 <div className="mt-auto pt-5 border-t border-slate-100">
                   <p className="font-bold text-lg text-slate-900">{lugar.precio} <span className="font-normal text-sm text-slate-500">MXN / noche</span></p>
-                  <button className="w-full bg-slate-900 text-white mt-5 py-3 rounded-xl font-medium hover:bg-purple-800 transition-colors">
+                  <Link href={`/alojamiento/${lugar.id}`} className="w-full block text-center bg-slate-900 text-white mt-5 py-3 rounded-xl font-medium hover:bg-purple-800 transition-colors">
                     Ver disponibilidad
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

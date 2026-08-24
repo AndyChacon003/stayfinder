@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { prisma } from "./lib/prisma";
 
 const categorias = [
   { id: 1, nombre: "Cabañas" },
@@ -9,64 +10,30 @@ const categorias = [
   { id: 6, nombre: "Frente al lago" }
 ];
 
-const alojamientos = [
-  {
-    id: 1,
-    tipo: "Cabaña",
-    titulo: "Refugio en el Bosque",
-    calificacion: "4.8",
-    ubicacion: "Mazamitla, Jalisco",
-    precio: "$1,200",
-    imagen: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&q=80"
-  },
-  {
-    id: 2,
-    tipo: "Departamento",
-    titulo: "Penthouse Céntrico",
-    calificacion: "4.9",
-    ubicacion: "Guadalajara, Jalisco",
-    precio: "$2,100",
-    imagen: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80"
-  },
-  {
-    id: 3,
-    tipo: "Casa",
-    titulo: "Villa del Sol",
-    calificacion: "4.7",
-    ubicacion: "Tepoztlán, Morelos",
-    precio: "$1,800",
-    imagen: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80"
-  },
-  {
-    id: 4,
-    tipo: "Loft",
-    titulo: "Estudio Industrial",
-    calificacion: "4.6",
-    ubicacion: "Ciudad de México",
-    precio: "$1,500",
-    imagen: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80"
-  },
-  {
-    id: 5,
-    tipo: "Cabaña",
-    titulo: "Glamping Estelar",
-    calificacion: "5.0",
-    ubicacion: "Valle de Bravo, Edomex",
-    precio: "$3,200",
-    imagen: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80"
-  },
-  {
-    id: 6,
-    tipo: "Casa",
-    titulo: "Casa Colonial",
-    calificacion: "4.8",
-    ubicacion: "San Miguel de Allende",
-    precio: "$2,500",
-    imagen: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80"
-  }
-];
+export default async function Home() {
+  const propiedadesDB = await prisma.property.findMany();
 
-export default function Home() {
+  const alojamientosDB = propiedadesDB.map((prop) => ({
+    id: prop.id,
+    tipo: "Cabaña",
+    titulo: prop.name,
+    calificacion: "Nuevo",
+    ubicacion: "Ubicación pendiente",
+    precio: "Por definir",
+    imagen: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&q=80"
+  }));
+
+  const alojamientosEstaticos = [
+    { id: 101, tipo: "Cabaña", titulo: "Refugio en el Bosque", calificacion: "4.8", ubicacion: "Mazamitla, Jalisco", precio: "$1,200", imagen: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&q=80" },
+    { id: 102, tipo: "Departamento", titulo: "Penthouse Céntrico", calificacion: "4.9", ubicacion: "Guadalajara, Jalisco", precio: "$2,100", imagen: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80" },
+    { id: 103, tipo: "Casa", titulo: "Villa del Sol", calificacion: "4.7", ubicacion: "Tepoztlán, Morelos", precio: "$1,800", imagen: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80" },
+    { id: 104, tipo: "Loft", titulo: "Estudio Industrial", calificacion: "4.6", ubicacion: "Ciudad de México", precio: "$1,500", imagen: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80" },
+    { id: 105, tipo: "Cabaña", titulo: "Glamping Estelar", calificacion: "5.0", ubicacion: "Valle de Bravo, Edomex", precio: "$3,200", imagen: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80" },
+    { id: 106, tipo: "Casa", titulo: "Casa Colonial", calificacion: "4.8", ubicacion: "San Miguel de Allende", precio: "$2,500", imagen: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80" }
+  ];
+
+  const alojamientos = [...alojamientosDB, ...alojamientosEstaticos];
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans">
       <header className="flex justify-between items-center p-6 bg-white shadow-sm">
@@ -125,31 +92,35 @@ export default function Home() {
       <main className="max-w-5xl mx-auto px-6 pb-20">
         <h2 className="text-2xl font-bold mb-10 text-slate-900 tracking-tight">Alojamientos Destacados</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {alojamientos.map((lugar) => (
-            <div key={lugar.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 flex flex-col group">
-              <div className="w-full h-56 relative overflow-hidden">
-                <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-purple-900 shadow-sm">
-                  {lugar.tipo}
+          {alojamientos.length > 0 ? (
+            alojamientos.map((lugar) => (
+              <div key={lugar.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 flex flex-col group">
+                <div className="w-full h-56 relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-purple-900 shadow-sm">
+                    {lugar.tipo}
+                  </div>
+                  <img src={lugar.imagen} alt={lugar.titulo} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
-                <img src={lugar.imagen} alt={lugar.titulo} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="p-6 flex flex-col flex-grow">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-semibold text-slate-900 text-lg leading-tight">{lugar.titulo}</h3>
+                    <span className="text-sm font-medium bg-slate-100 text-slate-700 px-2 py-1 rounded-md flex items-center gap-1">
+                      ★ {lugar.calificacion}
+                    </span>
+                  </div>
+                  <p className="text-sm font-normal text-slate-500 mb-6">{lugar.ubicacion}</p>
+                  <div className="mt-auto pt-5 border-t border-slate-100">
+                    <p className="font-bold text-lg text-slate-900">{lugar.precio} <span className="font-normal text-sm text-slate-500">MXN / noche</span></p>
+                    <Link href={`/alojamiento/${lugar.id}`} className="w-full block text-center bg-slate-900 text-white mt-5 py-3 rounded-xl font-medium hover:bg-purple-800 transition-colors">
+                      Ver disponibilidad
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <div className="p-6 flex flex-col flex-grow">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-semibold text-slate-900 text-lg leading-tight">{lugar.titulo}</h3>
-                  <span className="text-sm font-medium bg-slate-100 text-slate-700 px-2 py-1 rounded-md flex items-center gap-1">
-                    ★ {lugar.calificacion}
-                  </span>
-                </div>
-                <p className="text-sm font-normal text-slate-500 mb-6">{lugar.ubicacion}</p>
-                <div className="mt-auto pt-5 border-t border-slate-100">
-                  <p className="font-bold text-lg text-slate-900">{lugar.precio} <span className="font-normal text-sm text-slate-500">MXN / noche</span></p>
-                  <Link href={`/alojamiento/${lugar.id}`} className="w-full block text-center bg-slate-900 text-white mt-5 py-3 rounded-xl font-medium hover:bg-purple-800 transition-colors">
-                    Ver disponibilidad
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="col-span-full text-center text-slate-500">No hay alojamientos registrados aún.</p>
+          )}
         </div>
       </main>
 

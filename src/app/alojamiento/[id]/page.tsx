@@ -1,22 +1,13 @@
 import Link from "next/link";
+import { prisma } from "../../lib/prisma";
 
-const alojamientos = [
-    { id: 1, tipo: "Cabaña", titulo: "Refugio en el Bosque", calificacion: "4.8", ubicacion: "Mazamitla, Jalisco", precio: "$1,200", imagen: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&q=80" },
-    { id: 2, tipo: "Departamento", titulo: "Penthouse Céntrico", calificacion: "4.9", ubicacion: "Guadalajara, Jalisco", precio: "$2,100", imagen: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80" },
-    { id: 3, tipo: "Casa", titulo: "Villa del Sol", calificacion: "4.7", ubicacion: "Tepoztlán, Morelos", precio: "$1,800", imagen: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80" },
-    { id: 4, tipo: "Loft", titulo: "Estudio Industrial", calificacion: "4.6", ubicacion: "Ciudad de México", precio: "$1,500", imagen: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80" },
-    { id: 5, tipo: "Cabaña", titulo: "Glamping Estelar", calificacion: "5.0", ubicacion: "Valle de Bravo, Edomex", precio: "$3,200", imagen: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80" },
-    { id: 6, tipo: "Casa", titulo: "Casa Colonial", calificacion: "4.8", ubicacion: "San Miguel de Allende", precio: "$2,500", imagen: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80" }
-];
-
-// 1. Agregamos "async" a la función y definimos params como Promise
 export default async function AlojamientoDetalle({ params }: { params: Promise<{ id: string }> }) {
-
-    // 2. Esperamos a que los parámetros se resuelvan
     const resolvedParams = await params;
     const idNumerico = parseInt(resolvedParams.id, 10);
 
-    const lugar = alojamientos.find((a) => a.id === idNumerico);
+    const lugar = await prisma.alojamiento.findUnique({
+        where: { id: idNumerico }
+    });
 
     if (!lugar) {
         return (
@@ -60,10 +51,10 @@ export default async function AlojamientoDetalle({ params }: { params: Promise<{
 
                     <div className="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 h-fit sticky top-6">
                         <p className="text-2xl font-bold text-slate-900 mb-6">{lugar.precio} <span className="text-sm font-normal text-slate-500">MXN / noche</span></p>
-                        <button className="w-full bg-[#e61e4d] hover:bg-red-700 text-white font-bold py-3.5 px-6 rounded-xl transition-colors mb-4">
-                            Reservar ahora
-                        </button>
-                        <p className="text-xs text-center text-slate-500">No se te cobrará ningún monto aún</p>
+                        <a href={lugar.url_airbnb} target="_blank" rel="noopener noreferrer" className="w-full block text-center bg-[#e61e4d] hover:bg-red-700 text-white font-bold py-3.5 px-6 rounded-xl transition-colors mb-4">
+                            Ver en Airbnb
+                        </a>
+                        <p className="text-xs text-center text-slate-500">Serás redirigido a la plataforma externa</p>
                     </div>
                 </div>
             </main>

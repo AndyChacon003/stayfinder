@@ -74,7 +74,7 @@ export default function Login() {
                                             id="adminCode"
                                             name="adminCode"
                                             className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all text-slate-900"
-                                            placeholder="Solo si eres admin"
+                                            placeholder="Introduce ADMIN2026 si eres admin"
                                         />
                                     </div>
                                 </>

@@ -2,6 +2,8 @@
 
 import { prisma } from "../lib/prisma";
 import bcrypt from "bcryptjs";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function registrar(formData: FormData) {
     const email = formData.get("email") as string;
@@ -21,7 +23,9 @@ export async function registrar(formData: FormData) {
         }
     });
 
-    return { success: "Usuario registrado con éxito en Neon DB" };
+    cookies().set("stayfinder_session", "true", { path: "/" });
+
+    return { success: "Registrado exitosamente" };
 }
 
 export async function login(formData: FormData) {
@@ -36,5 +40,12 @@ export async function login(formData: FormData) {
     const coincide = await bcrypt.compare(password, usuario.password);
     if (!coincide) return { error: "Contraseña incorrecta" };
 
+    cookies().set("stayfinder_session", "true", { path: "/" });
+
     return { success: "Sesión iniciada correctamente" };
+}
+
+export async function logout() {
+    cookies().delete("stayfinder_session");
+    redirect("/");
 }

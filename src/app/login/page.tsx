@@ -50,7 +50,7 @@ export default function Login() {
                                 type="button"
                                 className="w-full bg-slate-900 hover:bg-purple-800 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-lg hover:shadow-purple-900/30 active:scale-95"
                             >
-                                Conectar a Neon DB
+                                Iniciar sesión
                             </button>
                         </form>
                     </div>

@@ -6,7 +6,9 @@ import { logout } from "./actions/auth";
 export default async function Home() {
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get("stayfinder_session");
+  const emailCookie = cookieStore.get("stayfinder_email");
   const isLoggedIn = !!sessionCookie;
+  const userEmail = emailCookie ? emailCookie.value : "";
 
   const alojamientos = await prisma.alojamiento.findMany({
     orderBy: { id: 'asc' }
@@ -16,13 +18,18 @@ export default async function Home() {
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans">
       <header className="p-6 bg-white shadow-sm flex items-center justify-between border-b border-slate-100 sticky top-0 z-50">
         <Link href="/" className="text-purple-900 font-bold text-2xl tracking-tight">StayFinder</Link>
-        <nav className="flex items-center gap-6">
+        <nav className="flex items-center gap-4">
           {isLoggedIn ? (
-            <form action={logout}>
-              <button type="submit" className="text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors px-5 py-2 rounded-full shadow-sm">
-                Cerrar Sesión
-              </button>
-            </form>
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-bold text-slate-600 bg-purple-50 border border-purple-100 px-4 py-2 rounded-full hidden sm:inline-block">
+                {userEmail}
+              </span>
+              <form action={logout}>
+                <button type="submit" className="text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors px-5 py-2 rounded-full shadow-sm">
+                  Cerrar Sesión
+                </button>
+              </form>
+            </div>
           ) : (
             <Link href="/login" className="text-sm font-bold text-white bg-purple-700 hover:bg-purple-800 transition-colors px-5 py-2 rounded-full shadow-md hover:shadow-purple-700/40">
               Iniciar Sesión

@@ -25,6 +25,7 @@ export async function registrar(formData: FormData) {
 
     const cookieStore = await cookies();
     cookieStore.set("stayfinder_session", "true", { path: "/" });
+    cookieStore.set("stayfinder_email", email, { path: "/" });
 
     return { success: "Registrado exitosamente" };
 }
@@ -43,6 +44,7 @@ export async function login(formData: FormData) {
 
     const cookieStore = await cookies();
     cookieStore.set("stayfinder_session", "true", { path: "/" });
+    cookieStore.set("stayfinder_email", email, { path: "/" });
 
     return { success: "Sesión iniciada correctamente" };
 }
@@ -50,5 +52,6 @@ export async function login(formData: FormData) {
 export async function logout() {
     const cookieStore = await cookies();
     cookieStore.delete("stayfinder_session");
+    cookieStore.delete("stayfinder_email");
     redirect("/");
 }

@@ -23,7 +23,8 @@ export async function registrar(formData: FormData) {
         }
     });
 
-    cookies().set("stayfinder_session", "true", { path: "/" });
+    const cookieStore = await cookies();
+    cookieStore.set("stayfinder_session", "true", { path: "/" });
 
     return { success: "Registrado exitosamente" };
 }
@@ -40,12 +41,14 @@ export async function login(formData: FormData) {
     const coincide = await bcrypt.compare(password, usuario.password);
     if (!coincide) return { error: "Contraseña incorrecta" };
 
-    cookies().set("stayfinder_session", "true", { path: "/" });
+    const cookieStore = await cookies();
+    cookieStore.set("stayfinder_session", "true", { path: "/" });
 
     return { success: "Sesión iniciada correctamente" };
 }
 
 export async function logout() {
-    cookies().delete("stayfinder_session");
+    const cookieStore = await cookies();
+    cookieStore.delete("stayfinder_session");
     redirect("/");
 }

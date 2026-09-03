@@ -4,7 +4,8 @@ import { cookies } from "next/headers";
 import { logout } from "./actions/auth";
 
 export default async function Home() {
-  const sessionCookie = cookies().get("stayfinder_session");
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("stayfinder_session");
   const isLoggedIn = !!sessionCookie;
 
   const alojamientos = await prisma.alojamiento.findMany({

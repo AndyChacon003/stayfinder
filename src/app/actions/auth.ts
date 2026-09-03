@@ -9,7 +9,6 @@ export async function registrar(formData: FormData) {
     const nombre = formData.get("nombre") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-    const adminCode = formData.get("adminCode") as string;
 
     if (!nombre || !email || !password) return { error: "Faltan datos" };
 
@@ -17,7 +16,9 @@ export async function registrar(formData: FormData) {
     if (existe) return { error: "El correo ya está registrado" };
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const rol = adminCode === "ADMIN2026" ? "ADMIN" : "USER";
+
+    // Asignación automática y oculta de ADMIN para tu correo de administrador
+    const rol = email.toLowerCase() === "admin@stayfinder.com" ? "ADMIN" : "USER";
 
     await prisma.usuario.create({
         data: {

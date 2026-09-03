@@ -9,17 +9,23 @@ export default function Login() {
     const [mensaje, setMensaje] = useState("");
     const [error, setError] = useState("");
 
-    async function handleSubmit(formData: FormData) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
         setMensaje("");
         setError("");
 
+        const formData = new FormData(e.currentTarget);
         const accion = isLogin ? login : registrar;
-        const respuesta = await accion(formData);
 
-        if (respuesta.error) {
-            setError(respuesta.error);
-        } else if (respuesta.success) {
-            setMensaje(respuesta.success);
+        try {
+            const respuesta = await accion(formData);
+            if (respuesta.error) {
+                setError(respuesta.error);
+            } else if (respuesta.success) {
+                setMensaje(respuesta.success);
+            }
+        } catch (err) {
+            setError("Ocurrió un error de conexión.");
         }
     }
 
@@ -44,7 +50,7 @@ export default function Login() {
                         {mensaje && <div className="mb-4 p-3 bg-green-100 text-green-800 rounded-xl text-sm font-bold text-center">{mensaje}</div>}
                         {error && <div className="mb-4 p-3 bg-red-100 text-red-800 rounded-xl text-sm font-bold text-center">{error}</div>}
 
-                        <form action={handleSubmit} className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <label htmlFor="email" className="block text-sm font-bold text-slate-700 mb-2">Correo electrónico</label>
                                 <input

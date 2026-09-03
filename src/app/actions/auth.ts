@@ -9,6 +9,7 @@ export async function registrar(formData: FormData) {
     const nombre = formData.get("nombre") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
+    const adminCode = formData.get("adminCode") as string;
 
     if (!nombre || !email || !password) return { error: "Faltan datos" };
 
@@ -16,18 +17,21 @@ export async function registrar(formData: FormData) {
     if (existe) return { error: "El correo ya está registrado" };
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const rol = adminCode === "ADMIN2026" ? "ADMIN" : "USER";
 
     await prisma.usuario.create({
         data: {
             nombre,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            rol
         }
     });
 
     const cookieStore = await cookies();
     cookieStore.set("stayfinder_session", "true", { path: "/" });
     cookieStore.set("stayfinder_nombre", nombre, { path: "/" });
+    cookieStore.set("stayfinder_rol", rol, { path: "/" });
 
     return { success: "Registrado exitosamente" };
 }
@@ -47,6 +51,7 @@ export async function login(formData: FormData) {
     const cookieStore = await cookies();
     cookieStore.set("stayfinder_session", "true", { path: "/" });
     cookieStore.set("stayfinder_nombre", usuario.nombre, { path: "/" });
+    cookieStore.set("stayfinder_rol", usuario.rol, { path: "/" });
 
     return { success: "Sesión iniciada correctamente" };
 }
@@ -55,5 +60,6 @@ export async function logout() {
     const cookieStore = await cookies();
     cookieStore.delete("stayfinder_session");
     cookieStore.delete("stayfinder_nombre");
+    cookieStore.delete("stayfinder_rol");
     redirect("/");
 }

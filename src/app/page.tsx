@@ -7,8 +7,11 @@ export default async function Home() {
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get("stayfinder_session");
   const nombreCookie = cookieStore.get("stayfinder_nombre");
+  const rolCookie = cookieStore.get("stayfinder_rol");
+
   const isLoggedIn = !!sessionCookie;
   const userName = nombreCookie ? nombreCookie.value : "";
+  const userRole = rolCookie ? rolCookie.value : "USER";
 
   const alojamientos = await prisma.alojamiento.findMany({
     orderBy: { id: 'asc' }
@@ -20,9 +23,12 @@ export default async function Home() {
         <Link href="/" className="text-purple-900 font-bold text-2xl tracking-tight">StayFinder</Link>
         <nav className="flex items-center gap-4">
           {isLoggedIn ? (
-            <div className="flex items-center gap-4">
-              <span className="text-sm font-bold text-purple-900 bg-purple-50 border border-purple-100 px-4 py-2 rounded-full hidden sm:inline-block shadow-sm">
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-bold text-purple-900 bg-purple-50 border border-purple-100 px-4 py-2 rounded-full hidden sm:inline-block shadow-sm flex items-center gap-2">
                 👤 {userName}
+                {userRole === "ADMIN" && (
+                  <span className="bg-purple-600 text-white text-xs px-2 py-0.5 rounded-md uppercase font-extrabold tracking-wider">Admin</span>
+                )}
               </span>
               <form action={logout}>
                 <button type="submit" className="text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors px-5 py-2 rounded-full shadow-sm">

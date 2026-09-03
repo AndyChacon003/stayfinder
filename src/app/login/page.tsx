@@ -2,14 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { registrar, login } from "../actions/auth";
 
 export default function Login() {
     const [isLogin, setIsLogin] = useState(true);
     const [mensaje, setMensaje] = useState("");
     const [error, setError] = useState("");
-    const router = useRouter();
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -26,8 +24,7 @@ export default function Login() {
             } else if (respuesta.success) {
                 setMensaje(respuesta.success);
                 setTimeout(() => {
-                    router.push("/");
-                    router.refresh();
+                    window.location.href = "/";
                 }, 1000);
             }
         } catch (err) {

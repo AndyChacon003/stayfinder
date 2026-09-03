@@ -7,7 +7,7 @@ export default async function Home() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans pb-24">
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans">
       <header className="p-6 bg-white shadow-sm flex items-center justify-between border-b border-slate-100 sticky top-0 z-50">
         <Link href="/" className="text-purple-900 font-bold text-2xl tracking-tight">StayFinder</Link>
         <nav className="flex items-center gap-6">
@@ -58,6 +58,26 @@ export default async function Home() {
           ))}
         </div>
       </main>
+
+      <div className="bg-purple-50 py-16 mt-24 text-center border-t border-purple-100">
+        <h2 className="text-3xl font-extrabold text-slate-900 mb-4">¿Tienes una propiedad?</h2>
+        <p className="text-slate-600 mb-8 font-medium">Próximamente podrás registrar tus alojamientos en StayFinder.</p>
+        <button className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md hover:shadow-purple-700/40">
+          Más información
+        </button>
+      </div>
+
+      <footer className="bg-slate-950 text-slate-400 py-10 px-6">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="text-center md:text-left">
+            <span className="text-white font-bold text-xl block mb-1">StayFinder</span>
+            <span className="text-sm">Proyecto educativo desarrollado con Next.js.</span>
+          </div>
+          <div className="text-sm text-center md:text-right">
+            © 2026 StayFinder. Todos los derechos reservados.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

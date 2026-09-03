@@ -6,9 +6,9 @@ import { logout } from "./actions/auth";
 export default async function Home() {
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get("stayfinder_session");
-  const emailCookie = cookieStore.get("stayfinder_email");
+  const nombreCookie = cookieStore.get("stayfinder_nombre");
   const isLoggedIn = !!sessionCookie;
-  const userEmail = emailCookie ? emailCookie.value : "";
+  const userName = nombreCookie ? nombreCookie.value : "";
 
   const alojamientos = await prisma.alojamiento.findMany({
     orderBy: { id: 'asc' }
@@ -21,8 +21,8 @@ export default async function Home() {
         <nav className="flex items-center gap-4">
           {isLoggedIn ? (
             <div className="flex items-center gap-4">
-              <span className="text-sm font-bold text-slate-600 bg-purple-50 border border-purple-100 px-4 py-2 rounded-full hidden sm:inline-block">
-                {userEmail}
+              <span className="text-sm font-bold text-purple-900 bg-purple-50 border border-purple-100 px-4 py-2 rounded-full hidden sm:inline-block shadow-sm">
+                👤 {userName}
               </span>
               <form action={logout}>
                 <button type="submit" className="text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors px-5 py-2 rounded-full shadow-sm">

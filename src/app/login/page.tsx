@@ -54,6 +54,20 @@ export default function Login() {
                         {error && <div className="mb-4 p-3 bg-red-100 text-red-800 rounded-xl text-sm font-bold text-center">{error}</div>}
 
                         <form onSubmit={handleSubmit} className="space-y-6">
+                            {!isLogin && (
+                                <div>
+                                    <label htmlFor="nombre" className="block text-sm font-bold text-slate-700 mb-2">Nombre completo</label>
+                                    <input
+                                        type="text"
+                                        id="nombre"
+                                        name="nombre"
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all text-slate-900"
+                                        placeholder="Tu Nombre"
+                                        required={!isLogin}
+                                    />
+                                </div>
+                            )}
+
                             <div>
                                 <label htmlFor="email" className="block text-sm font-bold text-slate-700 mb-2">Correo electrónico</label>
                                 <input

@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Alojamiento {
-  id           Int    @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   tipo         String
   titulo       String
   calificacion String
@@ -16,13 +16,27 @@ model Alojamiento {
   precio       String
   imagen       String
   url_airbnb   String
+  reservas     Reserva[]
 }
 
 model Usuario {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   nombre    String
-  email     String   @unique
+  email     String    @unique
   password  String
-  rol       String   @default("USER")
-  createdAt DateTime @default(now())
+  rol       String    @default("USER")
+  createdAt DateTime  @default(now())
+  reservas  Reserva[]
+}
+
+model Reserva {
+  id            Int         @id @default(autoincrement())
+  usuarioId     Int
+  alojamientoId Int
+  fechaInicio   DateTime
+  fechaFin      DateTime
+  total         Float
+  createdAt     DateTime    @default(now())
+  usuario       Usuario     @relation(fields: [usuarioId], references: [id])
+  alojamiento   Alojamiento @relation(fields: [alojamientoId], references: [id])
 }

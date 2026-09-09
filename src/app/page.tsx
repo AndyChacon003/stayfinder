@@ -30,6 +30,11 @@ export default async function Home() {
                   <span className="bg-purple-600 text-white text-xs px-2 py-0.5 rounded-md uppercase font-extrabold tracking-wider">Admin</span>
                 )}
               </span>
+              {userRole === "ADMIN" && (
+                <Link href="/admin" className="text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 transition-colors px-5 py-2 rounded-full shadow-sm">
+                  Panel Admin
+                </Link>
+              )}
               <form action={logout}>
                 <button type="submit" className="text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors px-5 py-2 rounded-full shadow-sm">
                   Cerrar Sesión
@@ -47,7 +52,7 @@ export default async function Home() {
       <div className="bg-gradient-to-br from-purple-900 via-purple-800 to-fuchsia-900 text-white py-24 px-6 mb-16 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full opacity-20 bg-[url('https://images.unsplash.com/photo-1551882547-ff40c0d129df?q=80&w=2000')] bg-cover bg-center mix-blend-overlay"></div>
         <div className="max-w-6xl mx-auto relative z-10 text-center">
-          <h1 className="text-5xl md:0xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-lg">Encuentra un espacio <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-200 to-pink-200">exclusivo</span></h1>
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-lg">Encuentra un espacio <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-200 to-pink-200">exclusivo</span></h1>
           <p className="text-xl md:text-2xl font-medium text-purple-100 max-w-2xl mx-auto mb-10 drop-shadow-md">Explora casas, lofts y cabañas con diseños únicos y amenidades de primer nivel para tu próximo viaje.</p>
         </div>
       </div>

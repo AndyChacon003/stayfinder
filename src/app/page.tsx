@@ -3,7 +3,10 @@ import { prisma } from "./lib/prisma";
 import { cookies } from "next/headers";
 import { logout } from "./actions/auth";
 
-export default async function Home() {
+export default async function Home({ searchParams }: { searchParams: any }) {
+  const sp = await searchParams;
+  const query = sp?.q || "";
+
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get("stayfinder_session");
   const nombreCookie = cookieStore.get("stayfinder_nombre");
@@ -14,6 +17,13 @@ export default async function Home() {
   const userRole = rolCookie ? rolCookie.value : "USER";
 
   const alojamientos = await prisma.alojamiento.findMany({
+    where: query ? {
+      OR: [
+        { ubicacion: { contains: query, mode: "insensitive" } },
+        { titulo: { contains: query, mode: "insensitive" } },
+        { tipo: { contains: query, mode: "insensitive" } }
+      ]
+    } : {},
     orderBy: { id: 'asc' }
   });
 
@@ -57,41 +67,71 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto relative z-10 text-center">
           <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-lg">Encuentra un espacio <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-200 to-pink-200">exclusivo</span></h1>
           <p className="text-xl md:text-2xl font-medium text-purple-100 max-w-2xl mx-auto mb-10 drop-shadow-md">Explora casas, lofts y cabañas con diseños únicos y amenidades de primer nivel para tu próximo viaje.</p>
+
+          <form method="GET" action="/" className="mt-10 max-w-2xl mx-auto flex bg-white p-2 rounded-full shadow-xl">
+            <input
+              type="text"
+              name="q"
+              defaultValue={query}
+              placeholder="¿A dónde vas? (Ej. Cabaña, Monterrey, Loft...)"
+              className="flex-1 px-6 py-3 rounded-l-full focus:outline-none text-slate-800 font-medium w-full"
+            />
+            <button type="submit" className="bg-purple-700 hover:bg-purple-800 text-white px-8 py-3 rounded-full font-bold transition-colors">
+              Buscar
+            </button>
+          </form>
         </div>
       </div>
 
       <main className="max-w-6xl mx-auto px-6">
-        <h2 className="text-3xl font-extrabold text-slate-900 mb-8 border-b-4 border-purple-600 inline-block pb-2">Alojamientos Destacados</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {alojamientos.map((lugar) => (
-            <div key={lugar.id} className="bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group border border-slate-100 hover:-translate-y-2">
-              <div className="relative h-64 overflow-hidden">
-                <img src={lugar.imagen} alt={lugar.titulo} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-purple-900 shadow-sm">
-                  {lugar.tipo}
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold text-slate-900 truncate pr-4">{lugar.titulo}</h3>
-                  <span className="flex items-center gap-1 text-purple-700 font-bold bg-purple-50 px-2 py-1 rounded-lg text-sm">
-                    ★ {lugar.calificacion}
-                  </span>
-                </div>
-                <p className="text-slate-500 text-sm mb-4 font-medium truncate">{lugar.ubicacion}</p>
-                <div className="flex items-end justify-between mt-6">
-                  <div>
-                    <span className="text-2xl font-extrabold text-slate-900">${lugar.precio}</span>
-                    <span className="text-xs text-slate-500 font-medium ml-1">MXN/noche</span>
-                  </div>
-                  <Link href={`/alojamiento/${lugar.id}`} className="bg-slate-900 hover:bg-purple-800 text-white font-bold py-2 px-5 rounded-xl transition-colors shadow-md">
-                    Ver detalles
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="flex justify-between items-center mb-8 border-b-4 border-purple-600 pb-2 inline-flex w-full sm:w-auto">
+          <h2 className="text-3xl font-extrabold text-slate-900">
+            {query ? `Resultados para "${query}"` : "Alojamientos Destacados"}
+          </h2>
+          {query && (
+            <Link href="/" className="ml-4 text-sm font-bold text-purple-600 hover:text-purple-800">
+              Ver todos
+            </Link>
+          )}
         </div>
+
+        {alojamientos.length === 0 ? (
+          <div className="text-center py-20">
+            <h3 className="text-2xl font-bold text-slate-700 mb-2">No se encontraron resultados</h3>
+            <p className="text-slate-500">Intenta buscar con otra palabra clave o ubicación.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            {alojamientos.map((lugar) => (
+              <div key={lugar.id} className="bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group border border-slate-100 hover:-translate-y-2">
+                <div className="relative h-64 overflow-hidden">
+                  <img src={lugar.imagen} alt={lugar.titulo} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-purple-900 shadow-sm">
+                    {lugar.tipo}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-bold text-slate-900 truncate pr-4">{lugar.titulo}</h3>
+                    <span className="flex items-center gap-1 text-purple-700 font-bold bg-purple-50 px-2 py-1 rounded-lg text-sm">
+                      ★ {lugar.calificacion}
+                    </span>
+                  </div>
+                  <p className="text-slate-500 text-sm mb-4 font-medium truncate">{lugar.ubicacion}</p>
+                  <div className="flex items-end justify-between mt-6">
+                    <div>
+                      <span className="text-2xl font-extrabold text-slate-900">${lugar.precio}</span>
+                      <span className="text-xs text-slate-500 font-medium ml-1">MXN/noche</span>
+                    </div>
+                    <Link href={`/alojamiento/${lugar.id}`} className="bg-slate-900 hover:bg-purple-800 text-white font-bold py-2 px-5 rounded-xl transition-colors shadow-md">
+                      Ver detalles
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </main>
 
       <div className="bg-purple-50 py-16 mt-24 text-center border-t border-purple-100">

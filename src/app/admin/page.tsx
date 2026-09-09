@@ -2,6 +2,7 @@ import { prisma } from "../lib/prisma";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { borrarAlojamiento } from "../actions/admin";
 
 export default async function AdminDashboard() {
     const cookieStore = await cookies();
@@ -35,9 +36,9 @@ export default async function AdminDashboard() {
                 <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-xl font-bold text-slate-800">Alojamientos ({alojamientos.length})</h2>
-                        <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl font-bold text-sm transition-colors">
+                        <Link href="/admin/nuevo" className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl font-bold text-sm transition-colors">
                             + Nuevo
-                        </button>
+                        </Link>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-sm">
@@ -55,9 +56,12 @@ export default async function AdminDashboard() {
                                         <td className="p-3 font-bold text-slate-500">{a.id}</td>
                                         <td className="p-3 font-medium text-slate-800">{a.titulo}</td>
                                         <td className="p-3 text-purple-700 font-bold">${a.precio}</td>
-                                        <td className="p-3">
-                                            <button className="text-blue-600 font-bold mr-3 hover:text-blue-800 transition-colors">Editar</button>
-                                            <button className="text-red-600 font-bold hover:text-red-800 transition-colors">Borrar</button>
+                                        <td className="p-3 flex gap-3">
+                                            <button className="text-blue-600 font-bold hover:text-blue-800 transition-colors">Editar</button>
+                                            <form action={borrarAlojamiento}>
+                                                <input type="hidden" name="id" value={a.id} />
+                                                <button type="submit" className="text-red-600 font-bold hover:text-red-800 transition-colors">Borrar</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 ))}

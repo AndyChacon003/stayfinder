@@ -1,8 +1,8 @@
-import { prisma } from "../../../lib/prisma";
+import { prisma } from "../../lib/prisma";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { crearReserva } from "../../../actions/reservas";
+import { crearReserva } from "../../actions/reservas";
 
 export default async function AlojamientoDetalle({ params }: { params: { id: string } }) {
     const resolvedParams = await params;
